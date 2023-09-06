@@ -3,24 +3,21 @@ import 'package:arcon_app/component/colors.dart';
 import 'package:arcon_app/component/formfield.dart';
 import 'package:arcon_app/component/style.dart';
 import 'package:arcon_app/controller/user_controller.dart';
-import 'package:arcon_app/view/authentication/signin.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class ForgotPassword extends StatefulWidget {
+  const ForgotPassword({super.key});
 
   @override
-  State<SignUp> createState() => _SignInState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
 final TextEditingController _email = TextEditingController();
-final TextEditingController _password = TextEditingController();
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-class _SignInState extends State<SignUp> {
-  bool obscure = true;
+class _ForgotPasswordState extends State<ForgotPassword> {
+  bool obscure = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -30,6 +27,44 @@ class _SignInState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: AppColor.white,
         surfaceTintColor: AppColor.white,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            const SizedBox(
+              width: 30,
+            ),
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                height: 36,
+                margin: const EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 5,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.lightBlack, width: 1.5),
+                ),
+                child: Center(
+                  child: Row(
+                    children: [
+                      const Icon(Icons.arrow_back),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Back',
+                        style: style.copyWith(color: AppColor.black),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(child: Container()),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -53,7 +88,7 @@ class _SignInState extends State<SignUp> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Hi There 👋',
+                    'Forgot Password 👋',
                     style: style.copyWith(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
@@ -63,11 +98,10 @@ class _SignInState extends State<SignUp> {
                 const SizedBox(
                   height: 6,
                 ),
-
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Enter your creadentials to create account',
+                    'Enter Email associated with your Account, a mail will be sent to you, with link to update your password.',
                     style: style.copyWith(
                       color: AppColor.darkerGrey,
                       fontSize: 15,
@@ -87,30 +121,9 @@ class _SignInState extends State<SignUp> {
                       ? "Enter your email address"
                       : null,
                 ),
-                SizedBox(
-                  height: size.height / 20,
-                ),
-                TextFormWidget(
-                  controller: _password,
-                  obscureText: obscure,
-                  keyboardType: TextInputType.text,
-                  hintText: 'Password',
-                  suffixIcon: InkWell(
-                    splashColor: Colors.transparent,
-                    onTap: () => setState(() {
-                      obscure = !obscure;
-                    }),
-                    child: Icon(
-                      obscure ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
-                      color: AppColor.lightBlack.withOpacity(0.8),
-                    ),
-                  ),
-                  validator: (input) =>
-                      (input!.isEmpty) ? "Enter your password" : null,
-                ),
 
                 SizedBox(
-                  height: size.height / 6,
+                  height: size.height / 7,
                 ),
 
                 /// Signin Button
@@ -119,17 +132,16 @@ class _SignInState extends State<SignUp> {
                   borderColor: Colors.transparent,
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      provider.signUp(
+                      await provider.resetPassword(
                         email: _email.text,
-                        password: _password.text,
                         context: context,
                       );
                     }
                   },
-                  child: provider.isSignUp
+                  child: provider.isResetPassword
                       ? buttonCircularIndicator
                       : Text(
-                          'SIGN UP',
+                          'SEND MAIL',
                           style: TextStyle(
                             fontSize: 12,
                             color: AppColor.white,
@@ -137,44 +149,6 @@ class _SignInState extends State<SignUp> {
                           ),
                         ),
                 ),
-
-                /// Dont have Account
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Have an account already?',
-                      style: TextStyle(
-                        color: AppColor.textGrey,
-                        fontSize: 14.0,
-                        wordSpacing: -1.5,
-                      ),
-                    ),
-                    const SizedBox(width: 5.0),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => const SignIn(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Sign In Here',
-                        style: TextStyle(
-                          color: AppColor.primaryColor,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          wordSpacing: -1,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
               ],
             ),
           ),

@@ -2,10 +2,12 @@ import 'package:arcon_app/component/button.dart';
 import 'package:arcon_app/component/colors.dart';
 import 'package:arcon_app/component/formfield.dart';
 import 'package:arcon_app/component/style.dart';
+import 'package:arcon_app/controller/user_controller.dart';
+import 'package:arcon_app/view/authentication/forgot_password.dart';
 import 'package:arcon_app/view/authentication/signup.dart';
-import 'package:arcon_app/view/homepage/homepage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
@@ -19,10 +21,11 @@ final TextEditingController _password = TextEditingController();
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class _SignInState extends State<SignIn> {
-  bool obscure = false;
+  bool obscure = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
+    var provider = Provider.of<UserController>(context);
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
@@ -33,7 +36,7 @@ class _SignInState extends State<SignIn> {
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: size.width < 800 ? size.width / 15 : size.width / 3,
+            horizontal: size.width < 800 ? 20 : size.width / 3,
           ),
           child: Form(
             key: _formKey,
@@ -85,7 +88,7 @@ class _SignInState extends State<SignIn> {
                       : null,
                 ),
                 SizedBox(
-                  height: size.height / 30,
+                  height: size.height / 20,
                 ),
                 TextFormWidget(
                   controller: _password,
@@ -113,12 +116,12 @@ class _SignInState extends State<SignIn> {
                 Align(
                   alignment: Alignment.centerRight,
                   child: InkWell(
-                    // onTap: () => Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (_) => const ForgotPassword(),
-                    //   ),
-                    // ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ForgotPassword(),
+                      ),
+                    ),
                     child: Text(
                       'Forgot Password',
                       style: style.copyWith(
@@ -130,7 +133,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height / 7,
+                  height: size.height / 8,
                 ),
 
                 /// Signin Button
@@ -139,22 +142,23 @@ class _SignInState extends State<SignIn> {
                   borderColor: Colors.transparent,
                   onTap: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const HomePage(),
-                        ),
+                      await provider.signIn(
+                        email: _email.text,
+                        password: _password.text,
+                        context: context,
                       );
                     }
                   },
-                  child: Text(
-                    'SIGN IN',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColor.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: provider.isSignIn
+                      ? buttonCircularIndicator
+                      : Text(
+                          'SIGN IN',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColor.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
 
                 /// Dont have Account

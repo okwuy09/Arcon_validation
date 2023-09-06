@@ -40,7 +40,6 @@ class TextFormWidget extends StatelessWidget {
       autofillHints: autofillHints,
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
-        isCollapsed: true,
         hintText: hintText,
         suffixIcon: suffixIcon,
         enabledBorder: UnderlineInputBorder(

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>812229010081-ma1q76p8efvmnjcg9042el37ogaceooq.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.812229010081-ma1q76p8efvmnjcg9042el37ogaceooq</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBy9jLZ8XmTYQePGw19owRlO6DqQxUziXE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>812229010081</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.arconApp</string>
+	<key>PROJECT_ID</key>
+	<string>arcon-2023</string>
+	<key>STORAGE_BUCKET</key>
+	<string>arcon-2023.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:812229010081:ios:69c1b5fadefbef185f06e0</string>
+</dict>
+</plist>
