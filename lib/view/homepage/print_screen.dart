@@ -93,7 +93,7 @@ class PrintScreen extends StatelessWidget {
 
     final font =
         await PdfGoogleFonts.abhayaLibreSemiBold(); //nunitoExtraLight();
-    final image = await imageFromAssetBundle('assets/logo2.png');
+    //final image = await imageFromAssetBundle('assets/logo2.png');
     pdf.addPage(
       pw.Page(
         pageFormat: PdfPageFormat.roll80,
