@@ -23,21 +23,37 @@ class UserController with ChangeNotifier {
       if (userDoc.exists) {
         userName = Users.fromJson(userDoc.data()!);
         notifyListeners();
-        if (userName.hasBeenValidated) {
-          // ignore: use_build_context_synchronously
-          validatedDialog(context, userName.name);
-          userName = Users(name: '', email: '', id: '');
-          notifyListeners();
+        if (userName.details['paymentConfirmed'] == 'true') {
+          if (userName.hasBeenValidated) {
+            // ignore: use_build_context_synchronously
+            validatedDialog(context, userName.name, '  has been Validated');
+            userName = Users(name: '', email: '', id: '');
+            notifyListeners();
+          } else {
+            String number = userName.number.toString();
+            if (number.length == 1) {
+              number = "00$number";
+              notifyListeners();
+            } else if (number.length == 2) {
+              number = "0$number";
+              notifyListeners();
+            }
+            var status = userName.details['speaker'] == 'Yes'
+                ? 'Speaker'
+                : 'Participant';
+            // ignore: use_build_context_synchronously
+            Navigator.push(
+              context,
+              CupertinoPageRoute(
+                builder: (_) =>
+                    PrintScreen(userName.name, status, "ARC$number"),
+              ),
+            );
+          }
         } else {
-          var status =
-              userName.details['speaker'] == 'Yes' ? 'Speaker' : 'Member';
           // ignore: use_build_context_synchronously
-          Navigator.push(
-            context,
-            CupertinoPageRoute(
-              builder: (_) => PrintScreen(userName.name, status),
-            ),
-          );
+          validatedDialog(
+              context, userName.name, '  Your payment is not Yet Confirmed');
         }
       } else {
         // ignore: use_build_context_synchronously

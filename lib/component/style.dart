@@ -19,7 +19,7 @@ final buttonCircularIndicator = SizedBox(
   ),
 );
 
-void validatedDialog(BuildContext context, String name) {
+void validatedDialog(BuildContext context, String name, String text) {
   showCupertinoDialog(
     context: context,
     builder: (BuildContext ctx) {
@@ -52,7 +52,7 @@ void validatedDialog(BuildContext context, String name) {
                   ),
                 ),
                 TextSpan(
-                  text: 'has been Validated',
+                  text: text,
                   style: style.copyWith(
                     fontSize: 18,
                   ),

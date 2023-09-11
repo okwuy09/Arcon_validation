@@ -13,9 +13,11 @@ import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 
 class PrintScreen extends StatelessWidget {
-  const PrintScreen(this.name, this.status, {Key? key}) : super(key: key);
+  const PrintScreen(this.name, this.status, this.code, {Key? key})
+      : super(key: key);
   final String name;
   final String status;
+  final String code;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
@@ -80,13 +82,13 @@ class PrintScreen extends StatelessWidget {
           ),
           provider.updateValidatedUser(context: context),
         },
-        build: (format) => _generatePdf(format, name, status, context),
+        build: (format) => _generatePdf(format, name, status, code, context),
       ),
     );
   }
 
-  Future<Uint8List> _generatePdf(
-      PdfPageFormat format, String name, String status, context) async {
+  Future<Uint8List> _generatePdf(PdfPageFormat format, String name,
+      String status, String code, context) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
 
     final font =
@@ -98,12 +100,7 @@ class PrintScreen extends StatelessWidget {
         build: (context) {
           return pw.Column(
             children: [
-              pw.Image(
-                image,
-                width: 80,
-                height: 35,
-              ),
-              pw.SizedBox(height: 5),
+              pw.SizedBox(height: 2),
               pw.SizedBox(
                 width: double.infinity,
                 child: pw.FittedBox(
@@ -116,7 +113,7 @@ class PrintScreen extends StatelessWidget {
                           name,
                           style: pw.TextStyle(
                             font: font,
-                            fontSize: 18,
+                            fontSize: 25,
                           ),
                         ),
                         pw.SizedBox(height: 2),
@@ -124,10 +121,17 @@ class PrintScreen extends StatelessWidget {
                           status,
                           style: pw.TextStyle(
                             font: font,
-                            fontSize: 18,
+                            fontSize: 25,
                           ),
                         ),
-                        pw.SizedBox(height: 10),
+                        pw.SizedBox(height: 5),
+                        pw.Text(
+                          code,
+                          style: pw.TextStyle(
+                            font: font,
+                            fontSize: 30,
+                          ),
+                        ),
                       ]),
                 ),
               ),

@@ -8,6 +8,7 @@ class Users {
       institution,
       credentials;
   late bool hasBeenValidated;
+  int? number;
   late Map<String, dynamic> details;
 
   Users({
@@ -19,6 +20,7 @@ class Users {
     this.gender = "",
     this.institution = "",
     this.credentials = "",
+    this.number,
     this.hasBeenValidated = false,
     this.details = const {
       "resident": "",
@@ -43,6 +45,7 @@ class Users {
         email: json["email"],
         name: json["name"],
         gender: json['gender'],
+        number: json['number'],
         type: json['type'],
         institution: json["institution"],
         credentials: json["credentials"],
